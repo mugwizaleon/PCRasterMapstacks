@@ -1,0 +1,12 @@
+<RCC>
+  <qresource prefix="/plugins/pcrastermapstackvisualisation">
+    <file>arrowright.png</file>
+    <file>next.png</file>
+    <file>Myicon.png</file>
+    <file>previous.png</file>
+    <file>play1.png</file>
+    <file>maps.png</file>
+    <file>dir.png</file>
+    <file>icon.png</file>
+  </qresource>
+</RCC>
