@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ui_pcrastermapstackvisualisation.ui'
 #
-# Created: Sat Jun 28 16:27:51 2014
+# Created: Wed Jul  9 16:51:08 2014
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -17,7 +17,7 @@ except AttributeError:
 class Ui_PcrasterMapstackVisualisation(object):
     def setupUi(self, PcrasterMapstackVisualisation):
         PcrasterMapstackVisualisation.setObjectName(_fromUtf8("PcrasterMapstackVisualisation"))
-        PcrasterMapstackVisualisation.resize(536, 300)
+        PcrasterMapstackVisualisation.resize(536, 326)
         self.txtBaseDir2_5 = QtGui.QLineEdit(PcrasterMapstackVisualisation)
         self.txtBaseDir2_5.setGeometry(QtCore.QRect(130, 10, 291, 31))
         self.txtBaseDir2_5.setObjectName(_fromUtf8("txtBaseDir2_5"))
@@ -121,6 +121,14 @@ class Ui_PcrasterMapstackVisualisation(object):
         self.listWidget = QtGui.QListWidget(PcrasterMapstackVisualisation)
         self.listWidget.setGeometry(QtCore.QRect(340, 90, 171, 191))
         self.listWidget.setObjectName(_fromUtf8("listWidget"))
+        self.pushButton = QtGui.QPushButton(PcrasterMapstackVisualisation)
+        self.pushButton.setGeometry(QtCore.QRect(190, 296, 91, 31))
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        font.setBold(True)
+        font.setWeight(75)
+        self.pushButton.setFont(font)
+        self.pushButton.setObjectName(_fromUtf8("pushButton"))
 
         self.retranslateUi(PcrasterMapstackVisualisation)
         QtCore.QMetaObject.connectSlotsByName(PcrasterMapstackVisualisation)
@@ -140,5 +148,6 @@ class Ui_PcrasterMapstackVisualisation(object):
         self.btnBaseDir_3.setToolTip(QtGui.QApplication.translate("PcrasterMapstackVisualisation", "Select a base directory", None, QtGui.QApplication.UnicodeUTF8))
         self.comboBox_2.setToolTip(QtGui.QApplication.translate("PcrasterMapstackVisualisation", "Available PCRatser time series", None, QtGui.QApplication.UnicodeUTF8))
         self.label_15.setText(QtGui.QApplication.translate("PcrasterMapstackVisualisation", "List of corenames of the mapstacks ", None, QtGui.QApplication.UnicodeUTF8))
+        self.pushButton.setText(QtGui.QApplication.translate("PcrasterMapstackVisualisation", "Close", None, QtGui.QApplication.UnicodeUTF8))
 
 import resources_rc

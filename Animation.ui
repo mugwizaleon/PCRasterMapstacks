@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>312</width>
-    <height>69</height>
+    <height>113</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -148,6 +148,26 @@
    </property>
    <property name="textFormat">
     <enum>Qt::AutoText</enum>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_6">
+   <property name="geometry">
+    <rect>
+     <x>100</x>
+     <y>80</y>
+     <width>91</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="text">
+    <string>Close</string>
    </property>
   </widget>
  </widget>

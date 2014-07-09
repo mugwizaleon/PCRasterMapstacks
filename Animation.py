@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'Animation.ui'
 #
-# Created: Sat Jun 28 16:35:40 2014
+# Created: Wed Jul  9 18:19:33 2014
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -17,7 +17,7 @@ except AttributeError:
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName(_fromUtf8("Dialog"))
-        Dialog.resize(312, 69)
+        Dialog.resize(312, 113)
         self.pushButton_4 = QtGui.QPushButton(Dialog)
         self.pushButton_4.setGeometry(QtCore.QRect(10, 20, 51, 41))
         self.pushButton_4.setText(_fromUtf8(""))
@@ -66,6 +66,14 @@ class Ui_Dialog(object):
         self.label_15.setFont(font)
         self.label_15.setTextFormat(QtCore.Qt.AutoText)
         self.label_15.setObjectName(_fromUtf8("label_15"))
+        self.pushButton_6 = QtGui.QPushButton(Dialog)
+        self.pushButton_6.setGeometry(QtCore.QRect(100, 80, 91, 31))
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        font.setBold(True)
+        font.setWeight(75)
+        self.pushButton_6.setFont(font)
+        self.pushButton_6.setObjectName(_fromUtf8("pushButton_6"))
 
         self.retranslateUi(Dialog)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
@@ -79,5 +87,6 @@ class Ui_Dialog(object):
         self.pushButton.setToolTip(QtGui.QApplication.translate("Dialog", "Go to the previous ", None, QtGui.QApplication.UnicodeUTF8))
         self.txtBaseDir2_5.setText(QtGui.QApplication.translate("Dialog", "1", None, QtGui.QApplication.UnicodeUTF8))
         self.label_15.setText(QtGui.QApplication.translate("Dialog", "Interval time for animation", None, QtGui.QApplication.UnicodeUTF8))
+        self.pushButton_6.setText(QtGui.QApplication.translate("Dialog", "Close", None, QtGui.QApplication.UnicodeUTF8))
 
 import resources_rc

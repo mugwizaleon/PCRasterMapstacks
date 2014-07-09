@@ -76,6 +76,11 @@ class PcrasterMapstackVisualisation:
         QObject.connect( self.dlg2.ui.pushButton_5, SIGNAL( "clicked()" ), self.actionLast)
         QObject.connect(self.dlg.ui.comboBox, SIGNAL("currentIndexChanged (const QString&)"), self.changelist) #Change the list of mapstacks
         
+        #Close dialogs widgets
+        QObject.connect( self.dlg.ui.pushButton, SIGNAL( "clicked()" ), self.close1)
+        QObject.connect( self.dlg3.ui.pushButton, SIGNAL( "clicked()" ), self.close2)
+        QObject.connect( self.dlg2.ui.pushButton_6, SIGNAL( "clicked()" ), self.close3)
+        
     def initGui(self):
         # Create action that will start plugin configuration
         self.action = QAction(
@@ -101,14 +106,25 @@ class PcrasterMapstackVisualisation:
         # Run the dialog event loop
         result = self.dlg.exec_()
         # See if OK was pressed
+        
+    def close1(self):
+        self.dlg.close()
 
     def TSSview(self):
         self.dlg3.move(10, 300)
         self.dlg3.show()# show the dialog   
+        
+    def close2(self):
+        self.dlg3.close()
+        self.dlg.show()
     
     def AnimationDlg (self):
         self.dlg2.move(200, 200)
         self.dlg2.show()# show the dialog
+    
+    def close3(self):
+        self.dlg2.close()
+        self.dlg.show()
         
     # Selecting the directory containg files 
     def selectDir( self ):
@@ -140,7 +156,7 @@ class PcrasterMapstackVisualisation:
         file_list =  glob.glob(filename)
         for index in file_list:
             list = index.split(".")
-            if (len(list)!= 2) :
+            if (len(list) < 2) :
                 file_list.remove(index)
         for index in file_list:
             if index.endswith(".tss"):
@@ -181,12 +197,16 @@ class PcrasterMapstackVisualisation:
 
     def DisplayTSSnames(self):
         self.dataDir = str(self.dlg.ui.txtBaseDir2_5.text())
-        os.chdir(self.dataDir )
-        filename = '*'+str(self.dlg.ui.comboBox.currentText())+'*'
-        file_list = self.loadFiles(filename) 
-        self.dlg.ui.listWidget.clear()
-        for index, file in enumerate(file_list):
-            self.dlg.ui.listWidget.addItem(file)
+        if not self.dataDir : pass
+        else:
+            os.chdir(self.dataDir )
+            if not self.dlg.ui.comboBox.currentText(): pass
+            else:
+                filename = '*'+str(self.dlg.ui.comboBox.currentText())+'*'
+                file_list = self.loadFiles(filename) 
+                self.dlg.ui.listWidget.clear()
+                for index, file in enumerate(file_list):
+                    self.dlg.ui.listWidget.addItem(file)
             
     def changelist(self):
         self.dlg.ui.listWidget.clear()
@@ -201,6 +221,7 @@ class PcrasterMapstackVisualisation:
         filename = '*'+str(self.dlg.ui.comboBox.currentText())+'*'
         file_list = self.loadFiles(filename)    
         legend = self.iface.legendInterface() 
+        self.dlg2.ui.pushButton_6.setEnabled(False)
         for index, file in enumerate(file_list):
             canvas = qgis.utils.iface.mapCanvas()
             import Styling
@@ -212,13 +233,11 @@ class PcrasterMapstackVisualisation:
             rlayer = qgis.utils.iface.activeLayer()
             legend.moveLayer( rlayer, 0 )
             time.sleep(float(self.dlg2.ui.txtBaseDir2_5.text()))
-
+        self.dlg2.ui.pushButton_6.setEnabled(True)
 
     def actionStart(self):
-        self.actionRemove()
         import Styling
-        self.actionRemove()
-        self.dlg.hide()        
+        self.dlg.hide()     
         self.iface.messageBar().clearWidgets ()
         layers = self.iface.legendInterface().layers()
         for layer in layers : 
@@ -226,23 +245,28 @@ class PcrasterMapstackVisualisation:
         import numpy
         numpy.seterr(divide='ignore', invalid='ignore', over='ignore')
         self.dataDir = str(self.dlg.ui.txtBaseDir2_5.text())
-        os.chdir(self.dataDir )
-        filename = '*'+str(self.dlg.ui.comboBox.currentText())+'*'
-        file_list = self.loadFiles(filename)
-        if not self.dlg.ui.comboBox.currentText():
-            QMessageBox.information( self.iface.mainWindow(),"Info", "The are no PCRaster mapstacksin this directory")
-            return
-        else:
-            self.AnimationDlg()
-            Styling.style1(filename, 'value', self.dataDir, file_list )
-            s = QSettings()
-            oldValidation = s.value( "/Projections/defaultBehaviour", "useGlobal" )
-            s.setValue( "/Projections/defaultBehaviour", "useGlobal" )
-            self.AddLayer(str(file_list[0]))
-            s.setValue( "/Projections/defaultBehaviour", oldValidation )
-            layer = qgis.utils.iface.activeLayer()
-            self.PrincipalLayer = layer.name()
-            self.iface.legendInterface().setLayerExpanded(layer, True)
+        if not self.dataDir : 
+            QMessageBox.information( self.iface.mainWindow(),"Info", "Please select a directory first")  
+            self.dlg.show()
+        else : 
+            os.chdir(self.dataDir )
+            filename = '*'+str(self.dlg.ui.comboBox.currentText())+'*'
+            file_list = self.loadFiles(filename)
+            if not self.dlg.ui.comboBox.currentText():
+                QMessageBox.information( self.iface.mainWindow(),"Info", "The are no PCRaster mapstacks in this directory")
+                self.dlg.show()
+#                return
+            else:
+                self.AnimationDlg()
+                Styling.style1(filename, 'value', self.dataDir, file_list )
+                s = QSettings()
+                oldValidation = s.value( "/Projections/defaultBehaviour", "useGlobal" )
+                s.setValue( "/Projections/defaultBehaviour", "useGlobal" )
+                self.AddLayer(str(file_list[0]))
+                s.setValue( "/Projections/defaultBehaviour", oldValidation )
+                layer = qgis.utils.iface.activeLayer()
+                self.PrincipalLayer = layer.name()
+                self.iface.legendInterface().setLayerExpanded(layer, True)
         
     def actionLast(self):
         self.actionRemove()
@@ -370,6 +394,8 @@ class PcrasterMapstackVisualisation:
             self.dlg3.ui.widget.canvas.ax.set_xticks(dates)  
             self.dlg3.ui.widget.canvas.ax.set_xticklabels(xlabels, rotation=30, fontsize=10) 
             self.dlg3.ui.widget.canvas.draw()
-        else: QMessageBox.information( self.iface.mainWindow(),"Info", "The are no PCRaster timeseries this directory")     
+        else: 
+            QMessageBox.information( self.iface.mainWindow(),"Info", "The are no PCRaster timeseries this directory")     
+            self.dlg.show()
 
 
