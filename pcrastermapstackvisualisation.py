@@ -48,7 +48,6 @@ class PcrasterMapstackVisualisation:
         # initialize locale
         locale = QSettings().value("locale/userLocale")[0:2]
         localePath = os.path.join(self.plugin_dir, 'i18n', 'pcrastermapstackvisualisation_{}.qm'.format(locale))
-
         if os.path.exists(localePath):
             self.translator = QTranslator()
             self.translator.load(localePath)
@@ -136,6 +135,8 @@ class PcrasterMapstackVisualisation:
         
     def actionRemove(self):
         layers = self.iface.legendInterface().layers()
+        layer = qgis.utils.iface.activeLayer()
+        self.PrincipalLayer = layer.name()
         for layer in layers :
             if layer.name() == self.PrincipalLayer : pass
             else : self.iface.legendInterface().moveLayer( layer, 0 )
@@ -265,7 +266,8 @@ class PcrasterMapstackVisualisation:
                 self.AddLayer(str(file_list[0]))
                 s.setValue( "/Projections/defaultBehaviour", oldValidation )
                 layer = qgis.utils.iface.activeLayer()
-                self.PrincipalLayer = layer.name()
+#                self.PrincipalLayer = layer.name()
+#                print self.PrincipalLayer
                 self.iface.legendInterface().setLayerExpanded(layer, True)
         
     def actionLast(self):
@@ -301,6 +303,7 @@ class PcrasterMapstackVisualisation:
         filename = '*'+str(self.dlg.ui.comboBox.currentText())+'*'
         file_list = self.loadFiles(filename)
         layer = qgis.utils.iface.activeLayer()
+        self.PrincipalLayer = layer.name()
         if layer is None :
             index = 0
         elif layer.name() not in file_list:
@@ -333,6 +336,7 @@ class PcrasterMapstackVisualisation:
         filename = '*'+str(self.dlg.ui.comboBox.currentText())+'*'
         file_list = self.loadFiles(filename)
         layer = qgis.utils.iface.activeLayer()
+        self.PrincipalLayer = layer.name()
         if layer is None :
             index = len(file_list) - 1
         elif layer.name() not in file_list:
